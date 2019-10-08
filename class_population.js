@@ -44,7 +44,8 @@ class Population {
         // (Составление пар родителей методом колеса рулетки)
         this.couples = [];
         for (let i = 0; i < this.length; i += 1) {
-            const chanceVal = this.randomDouble(0, 1);
+            let chanceVal = this.randomDouble(0, 1);
+            chanceVal = (chanceVal > 1) ? Math.abs(1 - chanceVal) : chanceVal;
             let chanceCircleVal = 0;
             for (let j = 0; j < this.gens.length; j += 1) {
                 chanceCircleVal += this.gens[j].chance;
@@ -82,9 +83,11 @@ class Population {
             gen[k] = (gen[k] === 0) ? 1 : 0;
         }
     }
-    selection() {
-        this.gens.sort((a, b) => b.fitnesFun - a.fitnesFun);
-        this.gens = this.gens.slice(0, this.length);      
+    selection() { 
+        while(this.gens.length !== this.length) {
+            const index = this.randomInteger(0, this.genLength - 1);
+            this.gens.splice(index, 1);
+        }
     }
     getBest(min, max) {
         const best = this.gens.filter((item) => {
@@ -95,9 +98,15 @@ class Population {
         return best;
     }
     getOptimal(max) {
-        const optimal = this.gens[0];
+        let optimal = null;
         for (let i = 1; i < this.gens.length; i += 1) {
-            if (optimal.fitnesFun > this.gens[i].fitnesFun && optimal.fitnesFun <= max) {
+            if (this.gens[i].fitnesFun <= max) {
+                optimal = this.gens[i];
+                break; 
+            }
+        }        
+        for (let i = 0; i < this.gens.length; i += 1) {
+            if (optimal.fitnesFun < this.gens[i].fitnesFun && this.gens[i].fitnesFun <= max) {
                 optimal = this.gens[i];
             }
         }

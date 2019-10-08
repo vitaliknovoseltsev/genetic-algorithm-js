@@ -21,13 +21,10 @@ function renderTitlesInTable(title) {
 
 
 
-const iterationCount = 10;
+const iterationCount = 4;
 const weights = [15, 20, 10, 4, 23, 33, 34, 10, 8, 5];
 const population = new Population(100, weights, 10, 0.8);
 
-for (let i = 0; i < iterationCount; i += 1) {
-    
-}
 let i = 0;
 let stop = false;
 while(i !== iterationCount && !stop) {
