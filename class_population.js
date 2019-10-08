@@ -86,7 +86,38 @@ class Population {
     selection() { 
         while(this.gens.length !== this.length) {
             const index = this.randomInteger(0, this.genLength - 1);
-            this.gens.splice(index, 1);
+            if (!this.gens[index].isElite) {
+                this.gens.splice(index, 1);
+            }
+        }
+    }
+    findElite(count, max) {
+        let counter = 0;
+        this.gens = this.gens.map((item) => {
+            item.isElite = false;
+            return item;
+        })
+        while(counter < count) {
+            let elite = null;
+            for (let i = 1; i < this.gens.length; i += 1) {
+                if (this.gens[i].fitnesFun <= max) {
+                    elite = this.gens[i];
+                    break; 
+                }
+            } 
+            for (const gen of this.gens) {
+                if (!gen.isElite && elite.fitnesFun < gen.fitnesFun && gen.fitnesFun <= max) {
+                    elite = gen;
+                }
+            }
+            elite.isElite = true;
+            // for (const gen of this.gens) {
+            //     if (elite.fitnesFun === gen.fitnesFun) {
+            //         gen.isElite = true;
+            //         break;
+            //     }
+            // }
+            counter += 1;
         }
     }
     getBest(min, max) {

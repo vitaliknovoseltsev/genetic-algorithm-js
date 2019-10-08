@@ -6,6 +6,7 @@ class Сhromosome {
         this.fitnesFun = null;
         this.chance = null;
         this.calcFitnesFunc(weights);
+        this.isElite = false;
     }
     calcFitnesFunc(weights) {
         this.fitnesFun = 0;

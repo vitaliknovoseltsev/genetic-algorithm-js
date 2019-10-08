@@ -4,6 +4,7 @@ function renderRowInTable(genList) {
     const table = document.getElementById('table');
     for (let gen of genList) {
         const row = document.createElement('tr');
+        if (gen.isElite) row.classList.add('bg-info');
         row.innerHTML = `
             <td>${gen.genList.join()}</td>
             <td>${gen.fitnesFun}</td>
@@ -35,6 +36,7 @@ while(i !== iterationCount && !stop) {
     renderRowInTable(population.gens);
     population.findСouples();
     population.crossover();
+    population.findElite(2, 141);
     population.selection();
     renderTitlesInTable('Итоговая популяция');
     renderRowInTable(population.gens);
