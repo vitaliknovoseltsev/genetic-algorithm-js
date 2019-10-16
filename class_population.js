@@ -111,12 +111,6 @@ class Population {
                 }
             }
             elite.isElite = true;
-            // for (const gen of this.gens) {
-            //     if (elite.fitnesFun === gen.fitnesFun) {
-            //         gen.isElite = true;
-            //         break;
-            //     }
-            // }
             counter += 1;
         }
     }
